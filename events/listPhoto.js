@@ -7,8 +7,6 @@ document.addEventListener("DOMContentLoaded", onDeviceReady, false);
 function onDeviceReady(){
 	//Hammer js tap handler
 	addHammerTapHandler();
-	//save photo
-	init();
 	//show take photo div
 	var takePhoto = document.getElementById("takeBtn");
 	takePhoto.addEventListener("click", function(){takePhotoPage();},false);
@@ -57,6 +55,9 @@ function takePhotoPage(ev){
 	document.querySelector("[data-role=modal]").style.display = "none";
 	document.querySelector("[data-role=overlay]").style.display = "none";
 	
+	//get picture through camera API
+	navigator.camera.getPicture( imgSuccess, imgFail, imgOptions );
+	
 }
 
 function displayThumbnails(ev){
@@ -72,7 +73,7 @@ function displayThumbnails(ev){
 
 function thunmbnailReturned(xhr){
 	var json = JSON.parse(xhr.responseText);
-	alert("something");
+	alert("display thumbnails");
 	var div = document.querySelector("[data-role=listview]");
 	div.innerHTML="";
 	for (var i = 0; i < json.thumbnails.length; i++){
